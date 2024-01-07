@@ -124,15 +124,24 @@ def perform_test(test_loader, model, test_meter, cfg, writer=None):
         if writer is not None:
             writer.plot_eval(preds=all_preds, labels=all_labels)
 
-        if cfg.TEST.SAVE_RESULTS_PATH != "":
-            save_path = os.path.join(cfg.OUTPUT_DIR, cfg.TEST.SAVE_RESULTS_PATH)
+        # if cfg.TEST.SAVE_RESULTS_PATH != "":
+        #     save_path = os.path.join(cfg.OUTPUT_DIR, cfg.TEST.SAVE_RESULTS_PATH)
 
-            with PathManager.open(save_path, "wb") as f:
-                pickle.dump([all_labels, all_labels], f)
+        #     with PathManager.open(save_path, "wb") as f:
+        #         pickle.dump([all_labels, all_labels], f)
 
-            logger.info(
-                "Successfully saved prediction results to {}".format(save_path)
-            )
+        #     logger.info(
+        #         "Successfully saved prediction results to {}".format(save_path)
+        #     )
+
+        save_path = os.path.join("./test_result", "result.pkl")
+
+        with PathManager.open(save_path, "wb") as f:
+            pickle.dump([all_preds, all_labels], f)
+
+        logger.info(
+            "Successfully saved prediction results to {}".format(save_path)
+        )
 
     test_meter.finalize_metrics()
     return test_meter
